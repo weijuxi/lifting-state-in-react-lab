@@ -1,4 +1,7 @@
 // src/App.jsx
+import Reacr, { useState } from 'react';
+import IngredientList from './components/IngredientList';
+import BurgerStack from './components/BurgerStack';
 
 import './App.css';
 
@@ -20,11 +23,24 @@ export const availableIngredients = [
 ];
 
 const App = () => {
+  const [stack, setStack] = useState([]);
+
+  const addToStack = (ingredient) => {
+    setStack([ingredient, ...stack]);
+  };
+
+  const removeFromStack = (index) => {
+    const newStack = [...stack];
+    newStack.splice(index, 1);
+    setStack(newStack);
+  }
+
   return (
     <main>
       <h1>Burger Stacker</h1>
       <section>
-      {/* List & Stack components */}
+        <IngredientList ingredients={availableIngredients} onClick={addToStack} />
+        <BurgerStack stack={stack} onClick={removeFromStack} />
       </section>
     </main>
   );
